@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -19,11 +20,14 @@ func main() {
 		log.Fatal(err)
 	}
 	defer f.Close()
+
 	t := time.Now()
 
-	f.WriteString("\n==== RESTARTED ====\n")
+	s := fmt.Sprintf("\n==== RESTARTED (%s) ====\n", time.Now().Format(time.RFC850))
+	f.WriteString(s)
+
 	for i := 1; ; i++ {
-		time.Sleep(time.Second * 5)
+		time.Sleep(time.Second * 10)
 
 		s := " ping "
 		if i%10 == 0 {
