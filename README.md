@@ -5,6 +5,7 @@ A suite CLI tools & utilities
 - [paperlog](./paperlog) - logs messages to papertrail
 - [slack](./slack) - send slack notifications
 - [get_secret](./get_secret) - fetch AWS Secrets Manager Secrets
+- [dumb_daemon](./dumb_daemon) - A useless daemon that just appends to a log file
 
 ## Basic Usage
 
