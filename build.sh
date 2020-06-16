@@ -3,7 +3,7 @@ set -e
 
 echo "Vetting, testing & building all Go binaries"
 
-names=(paperlog get_secret slack)
+names=(paperlog get_secret slack active_conn)
 
 for n in "${names[@]}"
 do

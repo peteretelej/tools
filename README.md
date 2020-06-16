@@ -6,6 +6,7 @@ A suite CLI tools & utilities
 - [slack](./slack) - send slack notifications
 - [get_secret](./get_secret) - fetch AWS Secrets Manager Secrets
 - [dumb_daemon](./dumb_daemon) - A useless daemon that just appends to a log file
+- [active_conn](./active_conn) - Print number of active Mysql connections every x seconds
 
 ## Basic Usage
 

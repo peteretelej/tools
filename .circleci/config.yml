@@ -1,0 +1,34 @@
+version: 2.0
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.12
+    steps:
+      - checkout
+      - run: ./build.sh
+  deploy:
+    docker:
+      - image: circleci/golang:1.14
+    steps:
+      - checkout
+      - run: |
+          mkdir dist/
+          go get github.com/mitchellh/gox
+          go get github.com/tcnksm/ghr
+          gox -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}" -os="linux darwin" -arch="386 amd64" ./paperlog
+          gox -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}" -os="linux windows darwin" -arch="386 amd64" ./slack
+          gox -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}" -os="linux windows darwin" -arch="386 amd64" ./get_secret
+          gox -output="dist/{{.Dir}}_{{.OS}}_{{.Arch}}" -os="linux windows darwin" -arch="386 amd64" ./active_conn
+          ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} ./dist/
+
+workflows:
+  version: 2
+  release:
+    jobs:
+      - build
+      - deploy:
+          filters:
+            tags:
+              only: /v[0-9]+(\.[0-9]+)*(-.*)*/
+            branches:
+              ignore: /.*/
